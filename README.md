@@ -51,7 +51,7 @@ upstream backendserver {
 ```
 ## Demo
 - /api/create-short-url 
-![create short url demo](https://github.com/anmolgaud/url-shortner-server-main/blob/master/images/create-short-url.gif?raw=true)
+  -![create short url demo](https://github.com/anmolgaud/url-shortner-server-main/blob/master/images/create-short-url.gif?raw=true)
 - /api/ping
-![ping](https://github.com/anmolgaud/url-shortner-server-main/blob/master/images/ping-2.gif?raw=true)
+  -![ping](https://github.com/anmolgaud/url-shortner-server-main/blob/master/images/ping-2.gif?raw=true)
 
