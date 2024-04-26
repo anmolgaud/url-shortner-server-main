@@ -1,21 +1,6 @@
 name: distributed_service
 
 services:
-  nginx:
-    container_name: loadbalancer
-    image: nginx:latest
-    hostname: nginx
-    restart: on-failure:3
-    depends_on:
-      - backend-1
-      - backend-2
-    ports:
-      - "8080:8080"
-    volumes:
-      - "./nginx.conf:/etc/nginx/nginx.conf:ro"
-    networks:
-      - backend
-
   mysql-db:
     container_name: mysql-db
     image: mysql:latest
@@ -32,9 +17,9 @@ services:
   
   backend-1:
     container_name: backend-1
-    image: easyurl
+    image: gaudanmol/easyurl
     hostname: backend-1
-    restart: on-failure:2
+    restart: always
     environment:
       DB_HOST: dbservice
       DB_PASSWORD: devmysql
@@ -45,14 +30,29 @@ services:
 
   backend-2:
     container_name: backend-2
-    image: easyurl
+    image: gaudanmol/easyurl
     hostname: backend-2
-    restart: on-failure:2
+    restart: always
     environment:
       DB_HOST: dbservice
       DB_PASSWORD: devmysql
     depends_on:
       - mysql-db
+    networks:
+      - backend
+
+  nginx:
+    container_name: loadbalancer
+    image: nginx:latest
+    hostname: nginx
+    restart: on-failure:3
+    depends_on:
+      - backend-1
+      - backend-2
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./nginx.conf:/etc/nginx/nginx.conf:ro"
     networks:
       - backend
 

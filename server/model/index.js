@@ -3,8 +3,9 @@ const randomString = require('randomstring');
 
 const createShortUrl = async (longUrl) => {
   try {
+    const urlDetails = await links.findOne({ where: { longUrl }});
+    if (urlDetails) return urlDetails.shortUrl;
     const shortUrl = randomString.generate({ length: 5, charset: 'alphabetic', capitalization: 'uppercase' });
-    await links.sync();
     await links.create({ shortUrl, longUrl, count: 0 });
     return shortUrl;
   } catch (err) {

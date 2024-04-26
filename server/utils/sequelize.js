@@ -12,6 +12,7 @@ const sequelize = new Sequelize('easyurl', process.env.DB_USERNAME, process.env.
 (async () => {
   try {
     await sequelize.authenticate();
+
     console.info(`Connected to databse`)
   } catch (err) {
     console.error(`DB error: ${err}`);

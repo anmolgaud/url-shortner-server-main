@@ -1,5 +1,8 @@
 const express = require('express');
 require('dotenv').config();
+const sequelize = require('./utils/sequelize');
+require('./scripts/create-tables');
+
 const linkRouter = require('./routes');
 const pingHandler = require('./middlewares/ping-handler');
 const errorHandler = require('./middlewares/error-handler');
