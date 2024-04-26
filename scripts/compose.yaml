@@ -1,0 +1,62 @@
+name: distributed_service
+
+services:
+  nginx:
+    container_name: loadbalancer
+    image: nginx:latest
+    hostname: nginx
+    restart: on-failure:3
+    depends_on:
+      - backend-1
+      - backend-2
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./nginx.conf:/etc/nginx/nginx.conf:ro"
+    networks:
+      - backend
+
+  mysql-db:
+    container_name: mysql-db
+    image: mysql:latest
+    hostname: dbservice
+    restart: on-failure:3
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+    ports:
+      - "3306:3306"
+    volumes:
+     - "./init.sql:/docker-entrypoint-initdb.d/init.sql"
+    networks:
+      - backend
+  
+  backend-1:
+    container_name: backend-1
+    image: easyurl
+    hostname: backend-1
+    restart: on-failure:2
+    environment:
+      DB_HOST: dbservice
+      DB_PASSWORD: devmysql
+    depends_on:
+      - mysql-db
+    networks:
+      - backend
+
+  backend-2:
+    container_name: backend-2
+    image: easyurl
+    hostname: backend-2
+    restart: on-failure:2
+    environment:
+      DB_HOST: dbservice
+      DB_PASSWORD: devmysql
+    depends_on:
+      - mysql-db
+    networks:
+      - backend
+
+networks:
+  backend:
+    name: backend
+    driver: bridge
