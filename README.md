@@ -1,5 +1,5 @@
 
-# URL Shortner Server with Load Balancer
+# URL Shortner Service with Load Balancer
 ![system architecture](https://github.com/anmolgaud/url-shortner-server-main/blob/master/images/system-architecture.png?raw=true)
 
 By default the service listens on port 8080
